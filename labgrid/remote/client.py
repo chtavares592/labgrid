@@ -753,9 +753,9 @@ class ClientSession(ApplicationSession):
         args = self.args.filename
         target = self._get_target(place)
         from ..protocol.bootstrapprotocol import BootstrapProtocol
-        from ..driver.usbloader import IMXUSBDriver, MXSUSBDriver
+        from ..driver.usbloader import IMXUSBDriver, MXSUSBDriver, RKUSBDriver
         from ..driver.openocddriver import OpenOCDDriver
-        from ..resource.remote import (NetworkMXSUSBLoader, NetworkIMXUSBLoader,
+        from ..resource.remote import (NetworkMXSUSBLoader, NetworkIMXUSBLoader, NetworkRKUSBLoader,
                                        NetworkAlteraUSBBlaster)
         drv = None
         try:
@@ -783,6 +783,13 @@ class ClientSession(ApplicationSession):
                     except NoDriverFoundError:
                         drv = OpenOCDDriver(target, name=None, **args)
                     drv.interface.timeout = self.args.wait
+                    break
+                elif isinstance(resource, NetworkRKUSBLoader):
+                    try:
+                        drv = target.get_driver(RKUSBDriver)
+                    except NoDriverFoundError:
+                        drv = RKUSBDriver(target, name=None)
+                    drv.loader.timeout = self.args.wait
                     break
         if not drv:
             raise UserError("target has no compatible resource available")
