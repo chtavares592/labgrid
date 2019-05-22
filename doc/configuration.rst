@@ -290,6 +290,21 @@ An MXSUSBLoader resource describes a USB device in the mxs loader state.
 Used by:
   - `MXSUSBDriver`_
 
+RKUSBLoader
+~~~~~~~~~~~~
+An RKUSBLoader resource describes a USB device in the rockchip loader state.
+
+.. code-block:: yaml
+
+   RKUSBLoader:
+     match:
+       'sys_name': '1-3'
+
+- match (str): key and value for a udev match, see `udev Matching`_
+
+Used by:
+  - `RKUSBDriver`_
+
 NetworkMXSUSBLoader
 ~~~~~~~~~~~~~~~~~~~
 A NetworkMXSUSBLoader descibes an `MXSUSBLoader`_ available on a remote computer.
@@ -297,6 +312,10 @@ A NetworkMXSUSBLoader descibes an `MXSUSBLoader`_ available on a remote computer
 NetworkIMXUSBLoader
 ~~~~~~~~~~~~~~~~~~~
 A NetworkIMXUSBLoader descibes an `IMXUSBLoader`_ available on a remote computer.
+
+NetworkRKUSBLoader
+~~~~~~~~~~~~~~~~~~~
+A NetworkRKUSBLoader descibes an `RKUSBLoader`_ available on a remote computer.
 
 AndroidFastboot
 ~~~~~~~~~~~~~~~
@@ -1130,6 +1149,36 @@ Implements:
 
 Arguments:
   - image (str): The key in :ref:`images <labgrid-device-config-images>` containing the path of an image to bootstrap onto the target
+
+RKUSBDriver
+~~~~~~~~~~~~
+A RKUSBDriver is used to upload an image into a device in the rockchip USB loader
+state. This is useful to bootstrap a bootloader onto a device.
+
+Binds to:
+  loader:
+    - `RKUSBLoader`_
+    - `NetworkRKUSBLoader`_
+
+Implements:
+  - :any:`BootstrapProtocol`
+
+.. code-block:: yaml
+
+   targets:
+     main:
+       drivers:
+         RKUSBDriver:
+           image: mybootloaderkey
+           usb_loader: myloaderkey
+
+   images:
+     mybootloaderkey: path/to/mybootloader.img
+     myloaderkey: path/to/myloader.bin
+
+Arguments:
+  - image (str): The key in :ref:`images <labgrid-device-config-images>` containing the path of an image to bootstrap onto the target
+  - usb_loader (srt): The key in :ref:`images <labgrid-device-config-images>` containing the path of an image to bootstrap onto the target
 
 USBStorageDriver
 ~~~~~~~~~~~~~~~~
