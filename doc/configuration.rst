@@ -857,7 +857,7 @@ Arguments:
   - autoboot (regex, default="stop autoboot"): autoboot message to match
   - interrupt (str, default="\\n"): string to interrupt autoboot (use "\\x03" for CTRL-C)
   - startstring (regex, default="[\n]barebox 20\d+"): string that indicates that Barebox is starting
-  - bootstring (regex, default="Linux version \d"): succesfully jumped into the kernel 
+  - bootstring (regex, default="Linux version \d"): succesfully jumped into the kernel
   - password (str): optional, password to use for access to the shell
   - login_timeout (int): optional, timeout for access to the shell
 
@@ -1277,7 +1277,7 @@ Binds to:
    images:
      dtb: ../images/mydtb.dtb
      kernel: ../images/vmlinuz
-     
+
 
 Implements:
   - :any:`ConsoleProtocol`
@@ -1298,7 +1298,7 @@ Arguments:
 
 The qemudriver also requires the specification of:
 
-- a tool key, this contains the path to the qemu binary 
+- a tool key, this contains the path to the qemu binary
 - an image key, the path to the kernel image and optionally the dtb key to
   specify the build device tree
 - a path key, this is the path to the rootfs
@@ -1390,7 +1390,7 @@ Currently tested on a `XenaCompact` chassis equipped with a `1 GE test module`.
 Strategies
 ----------
 
-Strategies are used to ensure that the device is in a certain state during a test. 
+Strategies are used to ensure that the device is in a certain state during a test.
 Such a state could be the boot loader or a booted Linux kernel with shell.
 
 BareboxStrategy
